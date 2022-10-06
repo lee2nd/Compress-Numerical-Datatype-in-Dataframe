@@ -1,7 +1,9 @@
 def reduce_mem_usage(df, verbose=True):
-		# Reduce the size of your train and test data to model more easily
+    # Reduce the size of your train and test data to model more easily
+
     numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
-    start_mem = df.memory_usage().sum() / 1024**2    
+    start_mem = df.memory_usage().sum() / 1024**2   
+
     for col in df.columns:
         col_type = df[col].dtypes
         if col_type in numerics:
@@ -22,5 +24,7 @@ def reduce_mem_usage(df, verbose=True):
                 else:
                     df[col] = df[col].astype(np.float64)    
     end_mem = df.memory_usage().sum() / 1024**2
+
     if verbose: print('Mem. usage decreased to {:5.2f} Mb ({:.1f}% reduction)'.format(end_mem, 100 * (start_mem - end_mem) / start_mem))
+		
     return df
